@@ -534,7 +534,7 @@ $("send").onclick=function(){
   var link = "mailto:"+CFG.email+"?subject="+encodeURIComponent("Dry hire booking request – "+$("name").value)+"&body="+encodeURIComponent(body);
   showPay(c);
   sendForm("Dry hire booking request – "+$("name").value,body,$("email").value);
-  if(CFG.paypal){window.open(CFG.paypal,"_blank","noopener");$("msg").innerHTML="Opening secure Square checkout… If it didn’t open, <a href=\""+CFG.paypal+"\" target=\"_blank\" rel=\"noopener\">tap here to pay your deposit</a>.";}
+  if(CFG.paypal){window.open(CFG.paypal,"_blank","noopener");sqOpened=true;$("msg").innerHTML="Opening secure Square checkout… If it didn’t open, <a href=\""+CFG.paypal+"\" target=\"_blank\" rel=\"noopener\">tap here to pay your deposit</a>.";}
   else{deliver(body,link,"msg");}
 };
 var panels={wet:$("wet"),dry:$("dry")},cur=null;
@@ -594,6 +594,19 @@ var HD=["Charcoal","Burgundy","Cream","Serif","Condensed + stripe","Plate","Rule
 function applyHd(){document.querySelector("header").setAttribute("data-v",hi);$("hdrsw").textContent="Banner: "+HD[hi]+" ↻"}
 $("hdrsw").onclick=function(){hi=(hi+1)%HD.length;applyHd()};
 applyHd();
+var sqOpened=false;
+function afterSquare(){
+  if(!sqOpened||document.visibilityState==="hidden")return;
+  sqOpened=false;
+  $("paypanel").classList.remove("open");
+  $("send").disabled=true;
+  $("msg").innerHTML="Thanks! Once your deposit has gone through, we’ll email you to confirm your booking. Questions? Use the chat button or message us on Facebook.";
+  setTimeout(function(){$("msg").scrollIntoView({behavior:"smooth",block:"center"})},150);
+}
+document.addEventListener("visibilitychange",afterSquare);
+$("payl").addEventListener("click",function(){sqOpened=true});
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("#msg a");if(a&&a.href.indexOf("square.link")>-1)sqOpened=true});
+window.addEventListener("focus",afterSquare);
 function sendForm(subject,body,replyTo,cb){
   if(!CFG.formKey){if(cb)cb(false);return}
   try{fetch("https://api.web3forms.com/submit",{method:"POST",keepalive:true,headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:CFG.formKey,subject:subject,from_name:"Exotic Earthworks website",replyto:replyTo||"",message:body})}).then(function(r){return r.json()}).then(function(j){if(cb)cb(!!(j&&j.success))}).catch(function(){if(cb)cb(false)})}catch(e){if(cb)cb(false)}
