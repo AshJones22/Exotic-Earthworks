@@ -594,13 +594,23 @@ var HD=["Charcoal","Burgundy","Cream","Serif","Condensed + stripe","Plate","Rule
 function applyHd(){document.querySelector("header").setAttribute("data-v",hi);$("hdrsw").textContent="Banner: "+HD[hi]+" ↻"}
 $("hdrsw").onclick=function(){hi=(hi+1)%HD.length;applyHd()};
 applyHd();
+(function(){
+  if(!/[?&]paid=1\b/.test(location.search))return;
+  var b=document.createElement("div");
+  b.setAttribute("role","status");
+  b.style.cssText="position:fixed;left:50%;top:16px;transform:translateX(-50%);z-index:9999;max-width:92vw;background:var(--accent);color:var(--accent-text);padding:16px 22px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.25);font-weight:700;text-align:center;font-size:17px";
+  b.innerHTML="Thanks! Payment Received. Please check your email for booking confirmation. <button type=\"button\" aria-label=\"Close\" style=\"margin-left:12px;background:none;border:0;color:inherit;font-size:20px;cursor:pointer\">×</button>";
+  b.querySelector("button").onclick=function(){b.remove()};
+  document.body.appendChild(b);
+  try{history.replaceState(null,"",location.pathname+location.hash)}catch(e){}
+})();
 var sqOpened=false;
 function afterSquare(){
   if(!sqOpened||document.visibilityState==="hidden")return;
   sqOpened=false;
   $("paypanel").classList.remove("open");
   $("send").disabled=true;
-  $("msg").innerHTML="Thanks! Once your deposit has gone through, we’ll email you to confirm your booking. Questions? Use the chat button or message us on Facebook.";
+  $("msg").innerHTML="Finished paying? You’ll get a receipt from Square and we’ll email your booking confirmation. If you didn’t complete the payment, <a href=\""+CFG.paypal+"\" target=\"_blank\" rel=\"noopener\">pay your deposit here</a>.";
   setTimeout(function(){$("msg").scrollIntoView({behavior:"smooth",block:"center"})},150);
 }
 document.addEventListener("visibilitychange",afterSquare);
