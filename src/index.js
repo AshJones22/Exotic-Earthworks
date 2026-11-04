@@ -1,9 +1,11 @@
 // Exotic Earthworks website Worker
 // Serves the static site from ./public and handles POST /api/send
-// (booking + quote emails via Cloudflare Email Service).
+// (booking + quote emails to the verified business inbox via Cloudflare Email Routing).
+import { EmailMessage } from "cloudflare:email";
 
 const OWNER = "ashveer.sewlal@gmail.com";
-const FROM = { email: "bookings@exoticearthworks.com.au", name: "Exotic Earthworks Website" };
+const FROM_ADDR = "bookings@exoticearthworks.com.au";
+const FROM_NAME = "Exotic Earthworks Website";
 const MAX = 20000;
 
 const json = (obj, status = 200) =>
@@ -11,6 +13,32 @@ const json = (obj, status = 200) =>
 
 const clean = (v, n = MAX) => String(v == null ? "" : v).slice(0, n);
 const isEmail = (v) => /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(v);
+const noCRLF = (v) => v.replace(/[\r\n]+/g, " ");
+
+function b64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = "";
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin);
+}
+const encWord = (s) => "=?UTF-8?B?" + b64(s) + "?=";
+const wrap76 = (s) => s.replace(/.{1,76}/g, "$&\r\n");
+
+function buildMime({ subject, text, replyTo }) {
+  const id = crypto.randomUUID() + "@exoticearthworks.com.au";
+  const headers = [
+    `From: ${encWord(FROM_NAME)} <${FROM_ADDR}>`,
+    `To: <${OWNER}>`,
+    `Subject: ${encWord(noCRLF(subject))}`,
+    `Date: ${new Date().toUTCString()}`,
+    `Message-ID: <${id}>`,
+    "MIME-Version: 1.0",
+    'Content-Type: text/plain; charset="UTF-8"',
+    "Content-Transfer-Encoding: base64",
+  ];
+  if (isEmail(replyTo)) headers.push(`Reply-To: <${noCRLF(replyTo)}>`);
+  return headers.join("\r\n") + "\r\n\r\n" + wrap76(b64(text));
+}
 
 export default {
   async fetch(request, env) {
@@ -19,7 +47,6 @@ export default {
     if (url.pathname === "/api/send") {
       if (request.method !== "POST") return json({ success: false, error: "Method not allowed" }, 405);
 
-      // Only accept submissions from our own site
       const origin = request.headers.get("Origin") || "";
       if (origin && !/^https:\/\/(www\.)?exoticearthworks\.com\.au$/.test(origin)) {
         return json({ success: false, error: "Forbidden" }, 403);
@@ -29,19 +56,16 @@ export default {
       try { data = await request.json(); } catch { return json({ success: false, error: "Bad request" }, 400); }
 
       const subject = clean(data.subject, 200) || "Website enquiry";
-      const body = clean(data.message);
+      const text = clean(data.message);
       const replyTo = clean(data.replyTo, 200);
-      if (!body) return json({ success: false, error: "Empty message" }, 400);
+      if (!text) return json({ success: false, error: "Empty message" }, 400);
 
-      // 1) Notify the business (free: verified destination address)
       try {
-        const msg = { to: OWNER, from: FROM, subject, text: body };
-        if (isEmail(replyTo)) msg.replyTo = replyTo;
-        await env.OWNER_EMAIL.send(msg);
+        const raw = buildMime({ subject, text, replyTo });
+        await env.OWNER_EMAIL.send(new EmailMessage(FROM_ADDR, OWNER, raw));
       } catch (e) {
         return json({ success: false, error: "Email failed: " + (e && e.message) }, 502);
       }
-
       return json({ success: true });
     }
 
