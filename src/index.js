@@ -58,6 +58,7 @@ export default {
       const subject = clean(data.subject, 200) || "Website enquiry";
       const text = clean(data.message);
       const replyTo = clean(data.replyTo, 200);
+      const auto = clean(data.auto);
       if (!text) return json({ success: false, error: "Empty message" }, 400);
 
       try {
@@ -66,7 +67,25 @@ export default {
       } catch (e) {
         return json({ success: false, error: "Email failed: " + (e && e.message) }, 502);
       }
-      return json({ success: true });
+      // Thank-you email to the customer via Resend (free tier). Skipped if no API key is set.
+      let customerSent = false;
+      if (auto && isEmail(replyTo) && env.RESEND_API_KEY) {
+        try {
+          const r = await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: { Authorization: "Bearer " + env.RESEND_API_KEY, "Content-Type": "application/json" },
+            body: JSON.stringify({
+              from: "Exotic Earthworks <" + FROM_ADDR + ">",
+              to: [replyTo],
+              reply_to: OWNER,
+              subject: "Thanks for contacting Exotic Earthworks",
+              text: auto,
+            }),
+          });
+          customerSent = r.ok;
+        } catch (e) { /* ignore: business email already sent */ }
+      }
+      return json({ success: true, customerSent });
     }
 
     return env.ASSETS.fetch(request);
