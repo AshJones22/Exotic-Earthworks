@@ -357,7 +357,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <div id="msg" role="status"></div>
 <div id="paypanel" class="panel"><div class="inner"><div class="card" style="margin-top:16px">
 <h3 style="margin:0 0 6px">Payment</h3>
-<p class="muted">Thanks, your booking request is on its way to us. Pay the deposit now to lock in your dates. The rest is paid before delivery.</p>
+<p class="muted">Pay your $250 deposit through Square to lock in your dates. Please include your hire dates when you pay. We’ll then confirm your booking. The rest is paid before delivery.</p>
 <div class="summary" id="paysum"></div>
 <p class="muted" style="font-size:14px">Your deposit is taken off your total hire cost. We keep a card on file to cover any damage, cleaning, fuel or late return costs.</p>
 <p><a id="payl" class="btn" href="#" target="_blank" rel="noopener" hidden>Pay $250 deposit securely with Square</a></p>
@@ -532,7 +532,9 @@ $("send").onclick=function(){
   var c = calc(); if(!validate(c)) return;
   var body = "BOOKING REQUEST\n\nType: Dry hire\nDates: "+$("sDates").textContent+" ("+c.days+" day"+(c.days>1?"s":"")+")\nAttachments: "+(c.picks.length?c.picks.map(function(p){return p.n}).join(", "):"None")+"\nDelivery: "+selTxt("deld")+" ["+$("sDel").textContent+"]"+"\nName: "+$("name").value+"\nMobile: "+$("phone").value+"\nEmail: "+$("email").value+"\nAddress: "+$("addr").value+" "+$("pc").value+"\nJob: "+($("notes").value||"–")+"\nDue now: "+$("sTot").textContent+"\n"+$("sRest").textContent;
   var link = "mailto:"+CFG.email+"?subject="+encodeURIComponent("Dry hire booking request – "+$("name").value)+"&body="+encodeURIComponent(body);
-  showPay(c);deliver(body,link,"msg");
+  showPay(c);
+  if(CFG.paypal){window.open(CFG.paypal,"_blank","noopener");$("msg").innerHTML="Opening secure Square checkout… If it didn’t open, <a href=\""+CFG.paypal+"\" target=\"_blank\" rel=\"noopener\">tap here to pay your deposit</a>.";}
+  else{deliver(body,link,"msg");}
 };
 var panels={wet:$("wet"),dry:$("dry")},cur=null;
 function openPanel(id,toggle){
