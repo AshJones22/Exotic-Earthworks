@@ -7,9 +7,9 @@
 - [x] Booking + quote emails to ashveer.sewlal@gmail.com (Cloudflare Email Routing)
 - [x] Design preview buttons removed
 - [x] Google search basics: page title/description, business info for Google, sitemap, share image
+- [x] Google Search Console: domain verified, sitemap submitted
 
 ## Next
-- [ ] **Google Search Console**: verify the site and submit the sitemap
 - [ ] **Google Business Profile**: website link added; add services, photos, service area, ask first customers for reviews
 - [ ] **Customer thank-you emails** via Resend (code ready; needs Resend account + RESEND_API_KEY secret in Cloudflare)
 - [ ] **Phone number** with tap-to-call button (new number coming)
