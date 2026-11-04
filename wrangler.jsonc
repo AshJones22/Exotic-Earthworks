@@ -5,5 +5,10 @@
   "assets": {
     "directory": "./public",
     "not_found_handling": "404-page"
-  }
+  },
+  // Connects the site to the domain (Cloudflare creates the DNS records)
+  "routes": [
+    { "pattern": "exoticearthworks.com.au", "custom_domain": true },
+    { "pattern": "www.exoticearthworks.com.au", "custom_domain": true }
+  ]
 }
