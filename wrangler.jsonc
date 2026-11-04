@@ -1,11 +1,18 @@
 {
-  // Cloudflare config: serves the static website in ./public
+  // Cloudflare config for exoticearthworks.com.au
   "name": "exotic-earthworks",
+  "main": "src/index.js",
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./public",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
   },
+  // Booking and quote emails go to the verified business inbox only.
+  "send_email": [
+    { "name": "OWNER_EMAIL", "destination_address": "ashveer.sewlal@gmail.com" }
+  ],
   // Connects the site to the root domain. www is redirected to it by a Cloudflare Redirect Rule.
   "routes": [
     { "pattern": "exoticearthworks.com.au", "custom_domain": true }
