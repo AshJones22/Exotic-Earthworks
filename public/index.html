@@ -36,7 +36,7 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .btn.alt{background:transparent;color:inherit;border:2px solid currentColor}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .hero{padding:36px 0 20px;display:grid;gap:24px;grid-template-columns:1.2fr 1fr;align-items:center}.photo{max-width:420px;justify-self:center;width:100%}
-@media(max-width:700px){.hero{grid-template-columns:1fr}}
+@media(max-width:700px){.hero{grid-template-columns:minmax(0,1fr)}}
 h1{font-size:clamp(28px,6vw,42px);line-height:1.1;margin:0 0 10px}
 h2{font-size:26px;margin:0 0 6px}
 .muted{color:var(--muted)}
@@ -117,7 +117,7 @@ footer a{color:#e6e8ea;text-decoration-color:var(--accent-light);text-underline-
 body{background-attachment:scroll}
 #bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none}
 .logo-img{height:60px;width:auto;border-radius:10px;display:block}
-.cta{display:grid;grid-template-columns:1fr;gap:10px;margin:16px 0}
+.cta{display:grid;grid-template-columns:1fr;gap:10px;margin:28px 0 16px}
 .cta .btn{flex:1 1 190px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.25;min-height:64px;border:2px solid var(--accent)}
 .cta .btn small{font-size:12px;font-weight:500}
 .cta .btn.alt{background:transparent;color:var(--text)}
@@ -240,7 +240,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 @media(max-width:560px){.atts{grid-template-columns:1fr}}
 #chatsw,#hdrsw,#bgsw{display:none!important}
 #chatsw{position:fixed;left:12px;bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:40;background:var(--dark);color:#fff;border:0;border-radius:999px;padding:9px 14px;font:600 13px system-ui,sans-serif;cursor:pointer;opacity:.92;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-.accept{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}.accept-l{font-size:13px;color:var(--muted);margin-right:2px}.pay{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font-size:13px;font-weight:700;letter-spacing:.2px}.pay img{height:20px;width:auto;display:block}.pay.logo{background:#f7f7f7;border-color:#f7f7f7;padding:0 8px}.pay.logo img{height:26px;width:auto;max-width:none;flex:none;object-fit:contain}.pay{flex:none}.pay.logo.bare{background:none;border:0;padding:0;min-height:0}.pay.logo.bare img{height:34px;width:auto;border-radius:8px}.pay.logo.bare img[alt="Mastercard"]{border:1px solid var(--line)}.accept{margin-top:30px;gap:10px}footer .accept{margin:0 0 18px}.fsoc{display:flex;gap:10px;margin-top:10px}.fsoc a{width:34px;height:34px;border-radius:50%;background:#8a9096;color:#fff;display:grid;place-items:center;text-decoration:none;transition:background .2s}.fsoc a:hover{background:#c3c8cd}footer .accept-l{color:#cfd3d8}.pay{width:102px;height:34px;min-height:34px;padding:0}.pay.logo img{height:26px;width:auto;max-width:92%}.pay.logo.bare img{height:34px;width:102px;max-width:none;object-fit:fill}.pay.logo img[alt="Visa"]{height:28px;width:auto}
+.accept{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}.accept-l{font-size:13px;color:var(--muted);margin-right:2px}.pchip{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font-size:13px;font-weight:700;letter-spacing:.2px}.pchip img{height:20px;width:auto;display:block}.pchip.logo{background:#f7f7f7;border-color:#f7f7f7;padding:0 8px}.pchip.logo img{height:26px;width:auto;max-width:none;flex:none;object-fit:contain}.pchip{flex:none}.pchip.logo.bare{background:none;border:0;padding:0;min-height:0}.pchip.logo.bare img{height:34px;width:auto;border-radius:8px}.pchip.logo.bare img[alt="Mastercard"]{border:1px solid var(--line)}.accept{margin-top:30px;gap:10px}footer .accept{margin:0 0 18px}.fsoc{display:flex;gap:10px;margin-top:10px}.fsoc a{width:34px;height:34px;border-radius:50%;background:#8a9096;color:#fff;display:grid;place-items:center;text-decoration:none;transition:background .2s}.fsoc a:hover{background:#c3c8cd}footer .accept-l{color:#cfd3d8}.pchip{width:102px;height:34px;min-height:34px;padding:0}.pchip.logo img{height:26px;width:auto;max-width:92%}.pchip.logo.bare img{height:34px;width:102px;max-width:none;object-fit:fill}.pchip.logo img[alt="Visa"]{height:28px;width:auto}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -259,8 +259,8 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <div class="hero">
 <div>
 <h1>1.8T Excavator Hire</h1>
-<p class="muted"><b>1.8 Tonne Excavator with Trailer for Hire</b><br>Wet (With Operator) or Dry (Without Operator) options.<br>Servicing Sydney &amp; Central Coast.<br>Set Prices.</p>
-<div class="cta"><a class="btn" href="#choose">Book Now<small>(Wet and Dry hire options)</small></a><a class="btn alt swap" href="#wet" data-open="wet">Free Quote<small>for other services with Operators (Landscaping, Plumbing)</small></a></div>
+<p class="muted"><b>1.8 Tonne Excavator with Trailer for Hire</b><br>8 attachments available<br>Wet or dry hire options.<br><br>Delivery across Sydney &amp; Central Coast.</p>
+<div class="cta"><a class="btn" href="#choose">Book Now<small>(Wet and Dry hire options)</small></a></div>
 </div>
 <div class="photo">
 <img id="mainimg" src="/img/photo-09.jpg" fetchpriority="high" alt="1.8 tonne red and black mini excavator with bucket and dozer blade" width="700" height="875" style="width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:var(--card);border-radius:10px;display:block">
@@ -381,6 +381,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <div class="summary" id="paysum"></div>
 <p class="muted" style="font-size:14px">Your deposit is taken off your total hire cost. We keep a card on file to cover any damage, cleaning, fuel or late return costs.</p>
 <p><a id="payl" class="btn" href="#" target="_blank" rel="noopener" hidden>Pay $250 deposit securely with Square</a></p>
+<p class="muted" style="font-size:14px;margin-top:-6px">Pay by card or Afterpay.</p>
 <p class="muted" id="paynote" style="font-size:14px">We’ll confirm availability and email your secure Square payment link to hold your dates.</p>
 </div></div></div>
 <p class="muted" style="font-size:14px">This sends a booking request, it isn’t confirmed until you receive our confirmation and the deposit is paid.</p>
@@ -404,7 +405,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 </main>
 
 <footer><div class="wrap">
-<div class="accept" aria-label="Payment options"><span class="accept-l">Payment options</span><span class="pay logo"><img src="/img/pay-visa.png" alt="Visa" width="250" height="144"></span><span class="pay logo bare"><img src="/img/pay-mastercard.png" alt="Mastercard" width="250" height="84"></span><span class="pay logo"><img src="/img/pay-paypal.png" alt="PayPal" width="239" height="70"></span><span class="pay logo bare"><img src="/img/pay-afterpay.png" alt="Afterpay" width="223" height="77"></span></div>
+<div class="accept" aria-label="Payment options"><span class="accept-l">Payment options</span><span class="pchip logo"><img src="/img/pay-visa.png" alt="Visa" width="250" height="144"></span><span class="pchip logo bare"><img src="/img/pay-mastercard.png" alt="Mastercard" width="250" height="84"></span><span class="pchip logo"><img src="/img/pay-paypal.png" alt="PayPal" width="239" height="70"></span><span class="pchip logo bare"><img src="/img/pay-afterpay.png" alt="Afterpay" width="223" height="77"></span></div>
 <b class="bname">Exotic Earthworks</b> · Sydney &amp; Central Coast<br>
 <div class="fsoc"><a href="https://www.facebook.com/p/Exotic-Earthworks-61579664133200/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18"><text x="12" y="19" text-anchor="middle" font-size="20" font-weight="700" font-family="Arial,sans-serif" fill="currentColor">f</text></svg></a><a href="https://www.instagram.com/exoticearthworks/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="4" y="4" width="16" height="16" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16.8" cy="7.2" r="1.2" fill="currentColor"/></svg></a></div>
 </div></footer>
@@ -665,7 +666,7 @@ var bb=document.querySelector(".brandbox");bb.onclick=function(e){if(e.target.cl
 var KB=[
  {k:/^(hi|hello|hey)\b|g'?day/,a:"Hi! I can help with prices, service areas, the machine and how to book. What would you like to know?"},
  {k:/bond|deposit/,a:"Dry hire needs a $250 deposit, which comes off your total hire cost, plus an ID check on pick-up. We also keep a card on file to cover any damage."},
- {k:/pay|paypal|square|card|afterpay|zip/,a:"The $250 deposit is paid by card through Square when you confirm your booking, and the rest of your hire is due 24 hours before delivery. Afterpay and Zip aren’t offered yet."},
+ {k:/pay|paypal|square|card|afterpay|zip/,a:"The $250 deposit is paid securely through Square when you confirm your booking. You can pay by card or with Afterpay (4 interest-free instalments), and the rest of your hire is due 24 hours before delivery. Zip and PayPal aren’t offered yet."},
  {k:/price|cost|rate|how much|cheap/,a:"Dry hire (machine only, you operate it) is $100 per day (2 day minimum) plus a $250 deposit. Drop off is $50 within Sydney metro, or $75 outside Sydney metro. Wet hire (with an operator) is quoted per job, and quotes are free.",act:[["Book dry hire","dry"],["Free wet hire quote","wet"]]},
  {k:/wet|operator|operator|quote/,a:"Wet hire means we bring the machine and an operator. It’s a free quote: tell us about the job and we’ll price it.",act:[["Get a free wet hire quote","wet"]]},
  {k:/dry|without|myself|yourself/,a:"Dry hire is the machine only, and you operate it. It’s $100 per day (2 day minimum) plus a $250 deposit. Drop off is $50 within Sydney metro, or $75 outside Sydney metro. Pick your dates on the calendar to send a booking request.",act:[["Book dry hire","dry"]]},
