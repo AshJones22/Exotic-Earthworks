@@ -23,3 +23,9 @@
 - [ ] Directory listings (hipages, Oneflare, True Local, Yellow Pages, Hotfrog)
 - [ ] **Google reviews** button / show reviews on the site
 - [ ] Optional: reply to customers from a bookings@ address instead of Gmail
+
+## Before changing the design (checklist)
+- The site is **locked to the dark wine look** for every visitor (no light/dark switching by device). Don't add `prefers-color-scheme` rules back.
+- Check any design change on a phone and a computer, with the device set to **light** and to **dark** (it must look identical).
+- Check at least one iPhone (Safari) and one Android (Chrome), plus Windows and Mac browsers (Chrome/Edge/Brave/Firefox).
+- Preview first, then go live.
