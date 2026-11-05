@@ -44,6 +44,13 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // Send www (http or https) to the main https address
+    if (url.hostname === "www.exoticearthworks.com.au" || url.protocol === "http:") {
+      url.hostname = "exoticearthworks.com.au";
+      url.protocol = "https:";
+      return Response.redirect(url.toString(), 301);
+    }
+
     if (url.pathname === "/api/send") {
       if (request.method !== "POST") return json({ success: false, error: "Method not allowed" }, 405);
 
