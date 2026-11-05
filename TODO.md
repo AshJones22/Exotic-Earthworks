@@ -9,8 +9,11 @@
 - [x] Google search basics: page title/description, business info for Google, sitemap, share image
 - [x] Google Search Console: domain verified, sitemap submitted
 - [x] Speed: photos as compressed files, thumbnails, one font
+- [x] Payment options logos (Visa, Mastercard, PayPal, Afterpay) and grey social icons in the footer
 
 ## Next
+- [ ] **PayPal at checkout**: waiting on Ash for a PayPal.Me link (or PayPal Business payment-button link). Then add a "Pay $250 deposit with PayPal" button beside Square, update the booking email and chat answer, preview first
+- [ ] **Afterpay**: decide whether to set it up for real or remove its logo from the footer (chat currently says Afterpay isn't offered)
 - [ ] **Google Business Profile**: website link added; add services, photos, service area, ask first customers for reviews
 - [ ] **Customer thank-you emails** via Resend (code ready; needs Resend account + RESEND_API_KEY secret in Cloudflare)
 - [ ] **Phone number** with tap-to-call button (new number coming)
