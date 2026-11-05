@@ -9,7 +9,6 @@
 - [x] Google search basics: page title/description, business info for Google, sitemap, share image
 - [x] Google Search Console: domain verified, sitemap submitted
 - [x] Speed: photos as compressed files, thumbnails, one font
-- [x] New home page (services, about, areas, FAQ, contact); booking moved to /hire
 
 ## Next
 - [ ] **Google Business Profile**: website link added; add services, photos, service area, ask first customers for reviews
