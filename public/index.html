@@ -36,7 +36,7 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .btn.alt{background:transparent;color:inherit;border:2px solid currentColor}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .hero{padding:36px 0 20px;display:grid;gap:24px;grid-template-columns:1.2fr 1fr;align-items:center}.photo{max-width:420px;justify-self:center;width:100%}
-@media(max-width:700px){.hero{grid-template-columns:1fr}}
+@media(max-width:700px){.hero{grid-template-columns:minmax(0,1fr)}}
 h1{font-size:clamp(28px,6vw,42px);line-height:1.1;margin:0 0 10px}
 h2{font-size:26px;margin:0 0 6px}
 .muted{color:var(--muted)}
@@ -260,7 +260,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <div>
 <h1>1.8T Excavator Hire</h1>
 <p class="muted"><b>1.8 Tonne Excavator with Trailer for Hire</b><br>Wet (With Operator) or Dry (Without Operator) options.<br>Servicing Sydney &amp; Central Coast.<br>Set Prices.</p>
-<div class="cta"><a class="btn" href="#choose">Book Now<small>(Wet and Dry hire options)</small></a><a class="btn alt swap" href="#wet" data-open="wet">Get a Quote<small>Other services with Operators</small></a></div>
+<div class="cta"><a class="btn" href="#choose">Book Now<small>(Wet and Dry hire options)</small></a></div>
 </div>
 <div class="photo">
 <img id="mainimg" src="/img/photo-09.jpg" fetchpriority="high" alt="1.8 tonne red and black mini excavator with bucket and dozer blade" width="700" height="875" style="width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:var(--card);border-radius:10px;display:block">
