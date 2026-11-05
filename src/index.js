@@ -51,6 +51,11 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
+    // Square sends paying customers to /?paid=1 - show the banner on the booking page
+    if (url.pathname === "/" && url.searchParams.get("paid") === "1") {
+      return Response.redirect("https://exoticearthworks.com.au/hire/?paid=1", 302);
+    }
+
     if (url.pathname === "/api/send") {
       if (request.method !== "POST") return json({ success: false, error: "Method not allowed" }, 405);
 
