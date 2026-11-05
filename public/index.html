@@ -381,6 +381,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <div class="summary" id="paysum"></div>
 <p class="muted" style="font-size:14px">Your deposit is taken off your total hire cost. We keep a card on file to cover any damage, cleaning, fuel or late return costs.</p>
 <p><a id="payl" class="btn" href="#" target="_blank" rel="noopener" hidden>Pay $250 deposit securely with Square</a></p>
+<p class="muted" style="font-size:14px;margin-top:-6px">Pay by card or Afterpay.</p>
 <p class="muted" id="paynote" style="font-size:14px">We’ll confirm availability and email your secure Square payment link to hold your dates.</p>
 </div></div></div>
 <p class="muted" style="font-size:14px">This sends a booking request, it isn’t confirmed until you receive our confirmation and the deposit is paid.</p>
@@ -665,7 +666,7 @@ var bb=document.querySelector(".brandbox");bb.onclick=function(e){if(e.target.cl
 var KB=[
  {k:/^(hi|hello|hey)\b|g'?day/,a:"Hi! I can help with prices, service areas, the machine and how to book. What would you like to know?"},
  {k:/bond|deposit/,a:"Dry hire needs a $250 deposit, which comes off your total hire cost, plus an ID check on pick-up. We also keep a card on file to cover any damage."},
- {k:/pay|paypal|square|card|afterpay|zip/,a:"The $250 deposit is paid by card through Square when you confirm your booking, and the rest of your hire is due 24 hours before delivery. Afterpay and Zip aren’t offered yet."},
+ {k:/pay|paypal|square|card|afterpay|zip/,a:"The $250 deposit is paid securely through Square when you confirm your booking. You can pay by card or with Afterpay (4 interest-free instalments), and the rest of your hire is due 24 hours before delivery. Zip and PayPal aren’t offered yet."},
  {k:/price|cost|rate|how much|cheap/,a:"Dry hire (machine only, you operate it) is $100 per day (2 day minimum) plus a $250 deposit. Drop off is $50 within Sydney metro, or $75 outside Sydney metro. Wet hire (with an operator) is quoted per job, and quotes are free.",act:[["Book dry hire","dry"],["Free wet hire quote","wet"]]},
  {k:/wet|operator|operator|quote/,a:"Wet hire means we bring the machine and an operator. It’s a free quote: tell us about the job and we’ll price it.",act:[["Get a free wet hire quote","wet"]]},
  {k:/dry|without|myself|yourself/,a:"Dry hire is the machine only, and you operate it. It’s $100 per day (2 day minimum) plus a $250 deposit. Drop off is $50 within Sydney metro, or $75 outside Sydney metro. Pick your dates on the calendar to send a booking request.",act:[["Book dry hire","dry"]]},
