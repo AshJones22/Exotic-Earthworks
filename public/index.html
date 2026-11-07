@@ -386,7 +386,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <div class="summary" id="paysum" style="margin-top:10px"></div>
 <div class="invd"><div><span>Deposit due now</span><b id="invDep">$250</b></div><div><span>Balance due 24 hours before delivery (incl. GST)</span><b id="invBal">–</b></div></div>
 </div>
-<h4 style="margin:20px 0 8px">Choose how to pay your deposit</h4>
+<h4 id="payhow" style="margin:20px 0 8px;scroll-margin-top:16px">Choose how to pay your deposit</h4>
 <div class="payopts" role="radiogroup" aria-label="Payment method">
 <label class="opt payopt"><input type="radio" name="payvia" value="card" checked><span><b>Card</b><br><span class="muted">Visa or Mastercard, secure checkout with Square</span></span><span class="mini"><img src="/img/pay-visa.png" alt="Visa" height="22"><img src="/img/pay-mastercard.png" alt="Mastercard" height="22"></span></label>
 <label class="opt payopt"><input type="radio" name="payvia" value="afterpay"><span><b>Afterpay</b><br><span class="muted">4 interest-free instalments. Choose Afterpay on Square’s secure checkout.</span></span><span class="mini"><img src="/img/pay-afterpay.png" alt="Afterpay" height="22"></span></label>
@@ -538,6 +538,8 @@ function update(){
     $("sRest").textContent = "Remaining "+money(Math.max(0,c.cost+c.att+c.del-c.dep))+" incl. GST due 24 hours before delivery";
   }
   $("send").disabled = false;
+  var okForm=!!(c && $("name").value.trim() && /^04\d{8}$/.test($("phone").value.replace(/[\s\-()]/g,"")) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("email").value.trim()) && $("addr").value.trim() && /^\d{4}$/.test($("pc").value.trim()));
+  $("send").textContent = okForm ? "Confirm Booking & Pay" : "Confirm Booking";
 }
 CFG.attachments.forEach(function(a){var l=document.createElement("label");l.className="opt";l.innerHTML="<input type=\"checkbox\" name=\"att\" value=\""+a[0]+"\" data-p=\""+a[1]+"\"><span><b>"+a[0]+"</b><br><span class=\"muted\">"+(a[1]>0?"+$"+a[1]+"/day":"Add to hire")+"</span></span>";l.querySelector("input").onchange=update;$("atts").appendChild(l)});
 function showPay(c){
@@ -549,7 +551,7 @@ function showPay(c){
   $("invBal").textContent=money(Math.max(0,c.cost+c.att+c.del-c.dep));
   updatePay();
   $("paypanel").classList.add("open");
-  setTimeout(function(){$("paypanel").scrollIntoView({behavior:"smooth",block:"start"})},150);
+  setTimeout(function(){$("payhow").scrollIntoView({behavior:"smooth",block:"start"})},700);
 }
 var payVia="card";
 function updatePay(){
