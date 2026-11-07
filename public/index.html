@@ -300,7 +300,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <div id="wet" class="panel"><div class="inner">
 <section>
 <h2>Wet hire: with an operator</h2>
-<p class="muted">Hire our experienced operators with an excavator, Solo operator or team hire available. Please select job options below that you’d like our help with.</p>
+<p class="muted" style="margin-bottom:24px">Select your services required and submit quote.</p>
 <div class="svcs">
 <label class="opt"><input type="checkbox" name="svc" value="Trenching &amp; drainage"><span><b>Trenching &amp; drainage</b><br><span class="muted">Stormwater, ag drains, pipe and cable trenches.</span></span></label>
 <label class="opt"><input type="checkbox" name="svc" value="Pool &amp; spa digs"><span><b>Pool &amp; spa digs</b><br><span class="muted">Small plunge pools, spas and tight-access excavation.</span></span></label>
@@ -314,8 +314,9 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <label class="opt other"><input type="checkbox" name="svc" value="Other services" id="wotherchk"><span><b>Other services</b><br><span class="muted">Please tell us more about what services you require.</span><textarea id="wother" rows="3" maxlength="500" placeholder="e.g. clearing a block, driveway dig-out…" aria-label="Tell us what other services you need"></textarea></span></label>
 </div>
 <div class="card" style="margin-top:16px">
-<b>Request a free quote</b>
-<div class="row"><div><label for="wname">Full name</label><input type="text" id="wname" autocomplete="name"></div>
+<b>Request a quote</b>
+<p class="muted" style="font-size:14px;margin:6px 0 0">Fill your details below and submit quote.</p>
+<div class="row" style="margin-top:28px"><div><label for="wname">Full name</label><input type="text" id="wname" autocomplete="name"></div>
 <div><label for="wphone">Mobile</label><input type="tel" id="wphone" autocomplete="tel" inputmode="tel" placeholder="04XX XXX XXX"></div></div>
 <label for="wemail">Email</label><input type="email" id="wemail" autocomplete="email">
 <div class="row"><div><label for="waddr">Site address / suburb</label><input type="text" id="waddr" autocomplete="street-address"></div>
@@ -324,7 +325,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <label for="wnotes">Tell us about the job (optional)</label><textarea id="wnotes" rows="3" placeholder="e.g. 15 m drainage trench along the back fence"></textarea>
 <div style="margin:16px 0 4px"><h3 style="margin:0 0 8px">8 attachments included</h3>
 <div class="atts"><label class="opt"><input type="checkbox" name="watt" value="200 mm digging bucket"><span><b>200 mm digging bucket</b></span></label><label class="opt"><input type="checkbox" name="watt" value="400 mm digging bucket"><span><b>400 mm digging bucket</b></span></label><label class="opt"><input type="checkbox" name="watt" value="600 mm digging bucket"><span><b>600 mm digging bucket</b></span></label><label class="opt"><input type="checkbox" name="watt" value="1000 mm mud bucket"><span><b>1000 mm mud bucket</b></span></label><label class="opt"><input type="checkbox" name="watt" value="Thumb grab"><span><b>Thumb grab</b></span></label><label class="opt"><input type="checkbox" name="watt" value="Ripper"><span><b>Ripper</b></span></label><label class="opt"><input type="checkbox" name="watt" value="Rake"><span><b>Rake</b></span></label><label class="opt"><input type="checkbox" name="watt" value="Quick hitch"><span><b>Quick hitch</b></span></label></div></div>
-<p style="margin-top:26px"><button class="btn" id="wsend" disabled>Request a free quote</button></p>
+<p style="margin-top:26px"><button class="btn" id="wsend" disabled>Request a quote</button></p>
 <div id="wmsg" role="status"></div>
 <p class="muted" id="wnote" style="font-size:14px">Please fill your details above and request a quote, we will get back to you within an hour.</p>
 </div>
