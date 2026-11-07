@@ -94,7 +94,7 @@ footer a{color:#e6e8ea;text-decoration-color:var(--accent-light);text-underline-
 .swap{color:var(--accent);font-weight:600}
 .svcs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .svcs .opt{margin:0}
-@media(max-width:600px){.svcs{grid-template-columns:1fr}}
+@media(max-width:600px){.svcs{grid-template-columns:1fr}}@media(min-width:700px){.svcs{grid-template-columns:repeat(3,1fr)}}#wet .svcs .opt{min-height:108px}@media(min-width:700px){#wet .svcs .opt{min-height:160px}}@media(min-width:800px){#wet .svcs .opt{min-height:134px}}
 .thumbs{display:flex;align-items:center;gap:6px;margin-top:10px}
 .strip{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;flex:1;padding:3px;position:relative}
 .strip::-webkit-scrollbar{display:none}
@@ -226,7 +226,7 @@ input.bad,textarea.bad{border-color:#e0364a}
 input[type=date]{width:100%;min-width:0;padding:11px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit;-webkit-appearance:none;appearance:none;text-align:left;display:block}
 input[type=date]::-webkit-date-and-time-value{text-align:left}
 input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
-.opt{flex-wrap:wrap}.opt>span{flex:1;min-width:0}.svcs{align-items:start}.svcs .opt{min-height:114px;box-sizing:border-box;margin-bottom:0}.opt .ex{flex-basis:100%;max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease,opacity .3s ease,margin .35s ease;border-radius:8px}.opt .ex img{width:auto;max-width:100%;height:auto;max-height:190px;object-fit:contain;display:block;margin:0 auto;border-radius:8px}.opt.hasex:has(input:checked) .ex{max-height:200px;opacity:1;margin-top:10px} #pv{position:fixed;z-index:70;width:230px;border-radius:12px;overflow:hidden;background:var(--card);border:1px solid var(--line);box-shadow:0 10px 28px rgba(0,0,0,.35);pointer-events:none;display:none}
+.opt{flex-wrap:wrap}.opt>span{flex:1;min-width:0}.svcs{align-items:start}.svcs .opt{min-height:0;padding:10px 12px;box-sizing:border-box;margin-bottom:0}.svcs .opt .muted{font-size:14px}.opt.other textarea{display:none;width:100%;margin-top:10px;box-sizing:border-box}.opt.other:has(input:checked) textarea{display:block}.opt .ex{flex-basis:100%;max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease,opacity .3s ease,margin .35s ease;border-radius:8px}.opt .ex img{width:auto;max-width:100%;height:auto;max-height:190px;object-fit:contain;display:block;margin:0 auto;border-radius:8px}.opt.hasex:has(input:checked) .ex{max-height:200px;opacity:1;margin-top:10px} #pv{position:fixed;z-index:70;width:230px;border-radius:12px;overflow:hidden;background:var(--card);border:1px solid var(--line);box-shadow:0 10px 28px rgba(0,0,0,.35);pointer-events:none;display:none}
 #pv img{width:100%;height:auto;display:block}
 #pv small{display:block;padding:6px 10px;font-size:12px;color:var(--muted)}
 #pv small:empty{display:none}
@@ -311,6 +311,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <label class="opt"><input type="checkbox" name="svc" value="Retaining wall &amp; slab prep"><span><b>Retaining wall &amp; slab prep</b><br><span class="muted">Dig-outs and base preparation.</span></span></label>
 <label class="opt"><input type="checkbox" name="svc" value="Soil, rubble &amp; spoil moving"><span><b>Soil, rubble &amp; spoil moving</b><br><span class="muted">Shift and load material around your site.</span></span></label>
 <label class="opt"><input type="checkbox" name="svc" value="Plumbing support"><span><b>Plumbing support</b><br><span class="muted">Digging for pipe, water and sewer lines.</span></span></label>
+<label class="opt other"><input type="checkbox" name="svc" value="Other services" id="wotherchk"><span><b>Other services</b><br><span class="muted">Please tell us more about what services you require.</span><textarea id="wother" rows="3" maxlength="500" placeholder="e.g. clearing a block, driveway dig-out…" aria-label="Tell us what other services you need"></textarea></span></label>
 </div>
 <div class="card" style="margin-top:16px">
 <b>Request a free quote</b>
@@ -583,17 +584,17 @@ var W={
 function wshow(id,force){var el=$(id),n=$(id+"Err");if(!n){n=document.createElement("div");n.id=id+"Err";n.className="ferr";el.parentNode.appendChild(n)}var v=el.value,bad=!W[id][0](v)&&(force||v!=="");n.textContent=bad?W[id][1]:"";el.classList.toggle("bad",bad)}
 Object.keys(W).forEach(function(id){$(id).addEventListener("blur",function(){wshow(id,false)});$(id).addEventListener("input",function(){if($(id+"Err")&&$(id+"Err").textContent)wshow(id,false)})});
 function wcheck(){
-  var any=document.querySelectorAll("input[name=svc]:checked").length>0;
+  var any=document.querySelectorAll("input[name=svc]:checked").length>0;if($("wotherchk").checked&&$("wother").value.trim().length<3)any=false;
   var ok=any&&Object.keys(W).every(function(id){return W[id][0]($(id).value)});
   $("wsend").disabled=!ok;
 }
 $("wet").addEventListener("input",wcheck);$("wet").addEventListener("change",wcheck);
 $("wsend").onclick=function(){
-  var svcs=Array.prototype.map.call(document.querySelectorAll("input[name=svc]:checked"),function(i){return i.value}).join(", ");
+  var svcs=Array.prototype.map.call(document.querySelectorAll("input[name=svc]:checked"),function(i){return i.id==="wotherchk"?"Other services ("+($("wother").value.trim()||"no details given")+")":i.value}).join(", ");
   var watts=Array.prototype.map.call(document.querySelectorAll("input[name=watt]:checked"),function(i){return i.value}).join(", ");
   var body="WET HIRE QUOTE REQUEST (with operator)\n\nServices: "+svcs+"\nAttachments: "+(watts||"None")+"\nPreferred date: "+($("wdate").value||"flexible")+"\nName: "+$("wname").value+"\nMobile: "+$("wphone").value+"\nEmail: "+$("wemail").value+"\nAddress: "+$("waddr").value+", "+$("wpc").value+"\nJob details: "+($("wnotes").value||"–");
   var link="mailto:"+CFG.email+"?subject="+encodeURIComponent("Wet hire quote request – "+$("wname").value)+"&body="+encodeURIComponent(body);
-  if(CFG.formKey){$("wmsg").innerHTML="Sending your request…";sendForm("Wet hire quote request – "+$("wname").value,body,$("wemail").value,function(ok,err){if(ok){$("wmsg").innerHTML="Thanks! Your quote request has been sent. We’ll get back to you within an hour.";Array.prototype.forEach.call(document.querySelectorAll("#wet input[type=checkbox]"),function(i){if(i.checked){i.checked=false;i.dispatchEvent(new Event("change",{bubbles:true}))}});wcheck()}else{$("wmsg").innerHTML="Sorry, we couldn’t send your request just now. Please try again, or <a href=\""+CFG.messenger+"\" target=\"_blank\" rel=\"noopener\">message us on Facebook</a>.<br><small style=\"opacity:.6\">("+String(err||"unknown error").replace(/</g,"&lt;")+")</small>"}},"Hi "+$("wname").value.trim().split(" ")[0]+",\n\nThanks for contacting Exotic Earthworks! We’ve received your quote request and will be in contact within an hour.\n\nYour request:\n"+body+"\n\nQuestions? Just reply to this email.\n\nExotic Earthworks\nSydney & Central Coast")}
+  if(CFG.formKey){$("wmsg").innerHTML="Sending your request…";sendForm("Wet hire quote request – "+$("wname").value,body,$("wemail").value,function(ok,err){if(ok){$("wmsg").innerHTML="Thanks! Your quote request has been sent. We’ll get back to you within an hour.";Array.prototype.forEach.call(document.querySelectorAll("#wet input[type=checkbox]"),function(i){if(i.checked){if(i.id==="wotherchk")$("wother").value="";i.checked=false;i.dispatchEvent(new Event("change",{bubbles:true}))}});wcheck()}else{$("wmsg").innerHTML="Sorry, we couldn’t send your request just now. Please try again, or <a href=\""+CFG.messenger+"\" target=\"_blank\" rel=\"noopener\">message us on Facebook</a>.<br><small style=\"opacity:.6\">("+String(err||"unknown error").replace(/</g,"&lt;")+")</small>"}},"Hi "+$("wname").value.trim().split(" ")[0]+",\n\nThanks for contacting Exotic Earthworks! We’ve received your quote request and will be in contact within an hour.\n\nYour request:\n"+body+"\n\nQuestions? Just reply to this email.\n\nExotic Earthworks\nSydney & Central Coast")}
   else{deliver(body,link,"wmsg");}
 };
 var IMGS=["/img/photo-09.jpg", "/img/photo-10.jpg", "/img/photo-11.jpg", "/img/photo-12.jpg", "/img/photo-13.jpg","/img/photo-14.jpg"],CAP=["Our 1.8t mini excavator, ready to work", "Side view with canopy, rubber tracks and bucket", "Quick-hitch coupler and bucket", "Dozer blade and rubber tracks", "Lifting a log on site","Trench digging in a backyard (illustrative image)"],ALT=["Red and black 1.8 tonne mini excavator with bucket and dozer blade", "Side view of the red mini excavator with canopy, rubber tracks and bucket", "Close-up of the quick-hitch coupler and digging bucket", "Dozer blade and rubber tracks on the mini excavator", "Mini excavator lifting a large log","Mini excavator digging a trench in a residential backyard"];
