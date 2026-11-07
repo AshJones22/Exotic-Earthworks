@@ -196,7 +196,7 @@ header[data-v="9"] .logo .lg3{color:var(--text);opacity:.8}
 header[data-v="9"] .logo .lg2{display:flex;align-items:center;justify-content:center;gap:14px}
 header[data-v="9"] .logo .lg2::before,header[data-v="9"] .logo .lg2::after{content:"";flex:1;max-width:60px;height:1px;background:#800020}
 header[data-v="9"]{color:#f0a7b8}header[data-v="9"] .logo .lg2::before,header[data-v="9"] .logo .lg2::after{background:#f0a7b8}
-header[data-v="9"] .logo .lg1{color:#cfd3d8}header[data-v="9"] .logo .lg2{color:#a3a9b0}header[data-v="9"] .logo .lg2::before,header[data-v="9"] .logo .lg2::after{background:#800020;height:2px}header[data-v="9"] .logo .lg3{color:#8a9096;opacity:1}.logo-img{height:108px}
+header[data-v="9"] .logo .lg1{color:#cfd3d8}header[data-v="9"] .logo .lg2{color:#a3a9b0}header[data-v="9"] .logo .lg2::before,header[data-v="9"] .logo .lg2::after{background:#800020;height:2px}header[data-v="9"] .logo .lg3{color:#8a9096;opacity:1}.inv{border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px}.invh{display:flex;justify-content:space-between;gap:12px;align-items:baseline}.invh span{color:var(--muted);font-size:14px}.invto{color:var(--muted);font-size:14px;margin-top:4px}.invd{margin-top:10px}.invd div{display:flex;justify-content:space-between;gap:12px;padding:3px 0}.payopts{display:grid;gap:10px}.payopt{margin:0;align-items:center;flex-wrap:wrap!important;padding:12px}.payopt>span:nth-of-type(1){flex:1 1 200px}.payopt .mini{display:flex;gap:6px;flex:none!important;align-items:center;margin-left:auto}@media(max-width:520px){.payopt .mini{flex-basis:100%;margin-left:28px}}.payopt .mini img{height:22px;width:auto;border-radius:4px;display:block}.logo-img{height:108px}
 .brandbox:hover .logo-img,.brandbox.big .logo-img{height:260px}
 @media(max-width:520px){.logo-img{height:80px}.brandbox:hover .logo-img,.brandbox.big .logo-img{height:170px}}
 #bgsw,#hdrsw{right:auto;left:12px}
@@ -378,14 +378,22 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <p style="margin-top:14px"><button class="btn" id="send" disabled>Confirm Booking</button></p>
 <div id="msg" role="status"></div>
 <div id="paypanel" class="panel"><div class="inner"><div class="card" style="margin-top:16px">
-<h3 style="margin:0 0 6px">Payment</h3>
-<p class="muted">Thanks, your booking request has been sent to us. Pay your $250 deposit by card, Afterpay or PayPal to lock in your dates, and we’ll confirm your booking by email. The rest is paid before delivery.</p>
-<div class="summary" id="paysum"></div>
-<p class="muted" style="font-size:14px">Your deposit is taken off your total hire cost. We keep a card on file to cover any damage, cleaning, fuel or late return costs.</p>
-<p><a id="payl" class="btn" href="#" target="_blank" rel="noopener" hidden>Pay $250 deposit securely with Square</a></p>
-<p class="muted" style="font-size:14px;margin-top:-6px">Pay by card or Afterpay.</p>
-<p><a id="paypl" class="btn alt" href="#" target="_blank" rel="noopener" hidden>Pay $250 deposit with PayPal</a></p>
-<p class="muted" id="paynote" style="font-size:14px">We’ll confirm availability and email your secure Square payment link to hold your dates.</p>
+<h3 style="margin:0 0 6px">Checkout</h3>
+<p class="muted">Thanks, your booking request has been sent to us. Check your invoice below and choose how you’d like to pay your $250 deposit. We’ll confirm your booking by email once it’s paid.</p>
+<div class="inv">
+<div class="invh"><b>Exotic Earthworks</b><span>Booking invoice</span></div>
+<div class="invto" id="invto"></div>
+<div class="summary" id="paysum" style="margin-top:10px"></div>
+<div class="invd"><div><span>Deposit due now</span><b id="invDep">$250</b></div><div><span>Balance due 24 hours before delivery (incl. GST)</span><b id="invBal">–</b></div></div>
+</div>
+<h4 style="margin:20px 0 8px">Choose how to pay your deposit</h4>
+<div class="payopts" role="radiogroup" aria-label="Payment method">
+<label class="opt payopt"><input type="radio" name="payvia" value="card" checked><span><b>Card</b><br><span class="muted">Visa or Mastercard, secure checkout with Square</span></span><span class="mini"><img src="/img/pay-visa.png" alt="Visa" height="22"><img src="/img/pay-mastercard.png" alt="Mastercard" height="22"></span></label>
+<label class="opt payopt"><input type="radio" name="payvia" value="afterpay"><span><b>Afterpay</b><br><span class="muted">4 interest-free instalments. Choose Afterpay on Square’s secure checkout.</span></span><span class="mini"><img src="/img/pay-afterpay.png" alt="Afterpay" height="22"></span></label>
+<label class="opt payopt"><input type="radio" name="payvia" value="paypal"><span><b>PayPal</b><br><span class="muted">Pay with your PayPal account.</span></span><span class="mini"><img src="/img/pay-paypal.png" alt="PayPal" height="22"></span></label>
+</div>
+<p style="margin-top:14px"><a id="payl" class="btn" href="#" target="_blank" rel="noopener">Pay $250 deposit</a></p>
+<p class="muted" id="paynote" style="font-size:14px">Your deposit is taken off your total hire cost. We keep a card on file to cover any damage, cleaning, fuel or late return costs.</p>
 </div></div></div>
 <p class="muted" style="font-size:14px">This sends a booking request, it isn’t confirmed until you receive our confirmation and the deposit is paid.</p>
 </div>
@@ -533,13 +541,24 @@ function update(){
 }
 CFG.attachments.forEach(function(a){var l=document.createElement("label");l.className="opt";l.innerHTML="<input type=\"checkbox\" name=\"att\" value=\""+a[0]+"\" data-p=\""+a[1]+"\"><span><b>"+a[0]+"</b><br><span class=\"muted\">"+(a[1]>0?"+$"+a[1]+"/day":"Add to hire")+"</span></span>";l.querySelector("input").onchange=update;$("atts").appendChild(l)});
 function showPay(c){
-  var s=document.querySelector(".summary");
-  $("paysum").innerHTML=s.innerHTML.replace(/ id="[^"]*"/g,"");
-  if(CFG.paypal){$("payl").href=CFG.paypal;$("payl").hidden=false;$("paynote").textContent="Pay your $250 deposit by card or Afterpay through Square, or with PayPal, to lock in your dates. We’ll confirm availability by email."}
-  if(CFG.paypalLink){$("paypl").href=CFG.paypalLink;$("paypl").hidden=false}
+  var cl=document.querySelector(".summary").cloneNode(true);
+  Array.prototype.forEach.call(cl.querySelectorAll(".tot,[hidden],.muted"),function(e){e.remove()});
+  $("paysum").innerHTML=cl.innerHTML.replace(/ id="[^"]*"/g,"");
+  $("invto").textContent="Billed to: "+$("name").value.trim()+" · "+$("email").value.trim()+" · "+$("phone").value.trim();
+  $("invDep").textContent=money(c.dep);
+  $("invBal").textContent=money(Math.max(0,c.cost+c.att+c.del-c.dep));
+  updatePay();
   $("paypanel").classList.add("open");
   setTimeout(function(){$("paypanel").scrollIntoView({behavior:"smooth",block:"start"})},150);
 }
+var payVia="card";
+function updatePay(){
+  var r=document.querySelector("input[name=payvia]:checked"),v=r?r.value:"card";
+  payVia=v;
+  if(v==="paypal"){$("payl").href=CFG.paypalLink;$("payl").textContent="Pay $250 deposit with PayPal"}
+  else{$("payl").href=CFG.paypal;$("payl").textContent=v==="afterpay"?"Continue to Afterpay on Square":"Pay $250 deposit by card"}
+}
+Array.prototype.forEach.call(document.querySelectorAll("input[name=payvia]"),function(r){r.addEventListener("change",updatePay)});
 function setErr(id,bad){var el=$(id),n=$(id+"Err");if(!n){n=document.createElement("div");n.id=id+"Err";n.className="ferr";el.parentNode.appendChild(n)}n.textContent=bad?"Please fill*":"";el.classList.toggle("bad",!!bad);return !!bad}
 function validate(c){
   var digits=$("phone").value.replace(/[\s\-()]/g,"");
@@ -560,7 +579,7 @@ $("send").onclick=function(){
   var link = "mailto:"+CFG.email+"?subject="+encodeURIComponent("Dry hire booking request – "+$("name").value)+"&body="+encodeURIComponent(body);
   showPay(c);
   sendForm("Dry hire booking request – "+$("name").value,body,$("email").value,null,"Hi "+$("name").value.trim().split(" ")[0]+",\n\nThanks for booking with Exotic Earthworks! We’ve received your dry hire request.\n\nNext steps:\n1. Pay your $250 deposit through Square (card or Afterpay), or with PayPal at https://www.paypal.com/ncp/payment/3KEVDDV2LLJ3S (if you haven’t already) to lock in your dates.\n2. We’ll confirm availability and email your booking confirmation and invoice.\n3. The remaining balance is due 24 hours before delivery.\n\nYour request:\n"+body+"\n\nQuestions? Just reply to this email.\n\nExotic Earthworks\nSydney & Central Coast");
-  if(CFG.paypal){window.open(CFG.paypal,"_blank","noopener");sqOpened=true;$("msg").innerHTML="Opening secure Square checkout… If it didn’t open, <a href=\""+CFG.paypal+"\" target=\"_blank\" rel=\"noopener\">tap here to pay your deposit</a>.";}
+  if(CFG.paypal){$("msg").innerHTML="Your booking request has been sent. Choose how to pay your deposit below.";}
   else{deliver(body,link,"msg");}
 };
 var panels={wet:$("wet"),dry:$("dry")},cur=null;
@@ -635,12 +654,12 @@ function afterSquare(){
   sqOpened=false;
   $("paypanel").classList.remove("open");
   $("send").disabled=true;
-  $("msg").innerHTML="Finished paying? You’ll get a receipt from Square and we’ll email your booking confirmation. If you didn’t complete the payment, <a href=\""+CFG.paypal+"\" target=\"_blank\" rel=\"noopener\">pay your deposit here</a>.";
+  var pu=payVia==="paypal"?CFG.paypalLink:CFG.paypal;$("msg").innerHTML="Finished paying? You’ll get a receipt by email and we’ll email your booking confirmation. If you didn’t complete the payment, <a href=\""+pu+"\" target=\"_blank\" rel=\"noopener\">pay your deposit here</a>.";
   setTimeout(function(){$("msg").scrollIntoView({behavior:"smooth",block:"center"})},150);
 }
 document.addEventListener("visibilitychange",afterSquare);
 $("payl").addEventListener("click",function(){sqOpened=true});
-document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("#msg a");if(a&&a.href.indexOf("square.link")>-1)sqOpened=true});
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("#msg a");if(a&&(a.href.indexOf("square.link")>-1||a.href.indexOf("paypal.com")>-1))sqOpened=true});
 window.addEventListener("focus",afterSquare);
 function sendForm(subject,body,replyTo,cb,auto){
   if(!CFG.formKey){if(cb)cb(false);return}
