@@ -378,15 +378,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <p style="margin-top:14px"><button class="btn" id="send">Confirm Booking</button></p>
 <div id="msg" role="status"></div>
 <div id="paypanel" class="panel"><div class="inner"><div class="card" style="margin-top:16px">
-<h3 style="margin:0 0 6px">Checkout</h3>
-<p class="muted">Thanks, your booking request has been sent to us. Check your invoice below and choose how you’d like to pay your $250 deposit. We’ll confirm your booking by email once it’s paid.</p>
-<div class="inv">
-<div class="invh"><b>Exotic Earthworks</b><span>Booking invoice</span></div>
-<div class="invto" id="invto"></div>
-<div class="summary" id="paysum" style="margin-top:10px"></div>
-<div class="invd"><div><span>Deposit due now</span><b id="invDep">$250</b></div><div><span>Balance due 24 hours before delivery (incl. GST)</span><b id="invBal">–</b></div></div>
-</div>
-<h4 id="payhow" style="margin:20px 0 8px;scroll-margin-top:16px">Choose how to pay your deposit</h4>
+<h4 id="payhow" style="margin:0 0 8px;scroll-margin-top:16px">Choose how to pay your deposit</h4>
 <div class="payopts" role="radiogroup" aria-label="Payment method">
 <label class="opt payopt"><input type="radio" name="payvia" value="card" checked><span><b>Card</b><br><span class="muted">Visa or Mastercard, secure checkout with Square</span></span><span class="mini"><img src="/img/pay-visa.png" alt="Visa" height="22"><img src="/img/pay-mastercard.png" alt="Mastercard" height="22"></span></label>
 <label class="opt payopt"><input type="radio" name="payvia" value="afterpay"><span><b>Afterpay</b><br><span class="muted">4 interest-free instalments. Choose Afterpay on Square’s secure checkout.</span></span><span class="mini"><img src="/img/pay-afterpay.png" alt="Afterpay" height="22"></span></label>
@@ -543,12 +535,6 @@ function update(){
 }
 CFG.attachments.forEach(function(a){var l=document.createElement("label");l.className="opt";l.innerHTML="<input type=\"checkbox\" name=\"att\" value=\""+a[0]+"\" data-p=\""+a[1]+"\"><span><b>"+a[0]+"</b><br><span class=\"muted\">"+(a[1]>0?"+$"+a[1]+"/day":"Add to hire")+"</span></span>";l.querySelector("input").onchange=update;$("atts").appendChild(l)});
 function showPay(c){
-  var cl=document.querySelector(".summary").cloneNode(true);
-  Array.prototype.forEach.call(cl.querySelectorAll(".tot,[hidden],.muted"),function(e){e.remove()});
-  $("paysum").innerHTML=cl.innerHTML.replace(/ id="[^"]*"/g,"");
-  $("invto").textContent="Billed to: "+$("name").value.trim()+" · "+$("email").value.trim()+" · "+$("phone").value.trim();
-  $("invDep").textContent=money(c.dep);
-  $("invBal").textContent=money(Math.max(0,c.cost+c.att+c.del-c.dep));
   updatePay();
   $("paypanel").classList.add("open");
   setTimeout(function(){$("payhow").scrollIntoView({behavior:"smooth",block:"start"})},700);
@@ -581,7 +567,7 @@ $("send").onclick=function(){
   var link = "mailto:"+CFG.email+"?subject="+encodeURIComponent("Dry hire booking request – "+$("name").value)+"&body="+encodeURIComponent(body);
   showPay(c);
   sendForm("Dry hire booking request – "+$("name").value,body,$("email").value,null,"Hi "+$("name").value.trim().split(" ")[0]+",\n\nThanks for booking with Exotic Earthworks! We’ve received your dry hire request.\n\nNext steps:\n1. Pay your $250 deposit through Square (card or Afterpay), or with PayPal at https://www.paypal.com/ncp/payment/3KEVDDV2LLJ3S (if you haven’t already) to lock in your dates.\n2. We’ll confirm availability and email your booking confirmation and invoice.\n3. The remaining balance is due 24 hours before delivery.\n\nYour request:\n"+body+"\n\nQuestions? Just reply to this email.\n\nExotic Earthworks\nSydney & Central Coast");
-  if(CFG.paypal){$("msg").innerHTML="Your booking request has been sent. Choose how to pay your deposit below.";}
+  if(CFG.paypal){$("msg").innerHTML="";}
   else{deliver(body,link,"msg");}
 };
 var panels={wet:$("wet"),dry:$("dry")},cur=null;
