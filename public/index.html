@@ -379,11 +379,12 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <div id="msg" role="status"></div>
 <div id="paypanel" class="panel"><div class="inner"><div class="card" style="margin-top:16px">
 <h3 style="margin:0 0 6px">Payment</h3>
-<p class="muted">Thanks, your booking request has been sent to us. Pay your $250 deposit through Square to lock in your dates, and we’ll confirm your booking by email. The rest is paid before delivery.</p>
+<p class="muted">Thanks, your booking request has been sent to us. Pay your $250 deposit by card, Afterpay or PayPal to lock in your dates, and we’ll confirm your booking by email. The rest is paid before delivery.</p>
 <div class="summary" id="paysum"></div>
 <p class="muted" style="font-size:14px">Your deposit is taken off your total hire cost. We keep a card on file to cover any damage, cleaning, fuel or late return costs.</p>
 <p><a id="payl" class="btn" href="#" target="_blank" rel="noopener" hidden>Pay $250 deposit securely with Square</a></p>
 <p class="muted" style="font-size:14px;margin-top:-6px">Pay by card or Afterpay.</p>
+<p><a id="paypl" class="btn alt" href="#" target="_blank" rel="noopener" hidden>Pay $250 deposit with PayPal</a></p>
 <p class="muted" id="paynote" style="font-size:14px">We’ll confirm availability and email your secure Square payment link to hold your dates.</p>
 </div></div></div>
 <p class="muted" style="font-size:14px">This sends a booking request, it isn’t confirmed until you receive our confirmation and the deposit is paid.</p>
@@ -395,7 +396,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <ol class="pay">
 <li><div><b>Send your request</b><br><span class="muted">Pick your dates above. We reply the same day to confirm availability.</span></div></li>
 <li><div><b>Receive your confirmation &amp; invoice</b><br><span class="muted">We send a booking confirmation with the final price, delivery details and hire agreement.</span></div></li>
-<li><div><b>Pay the deposit to lock in your dates</b><br><span class="muted">Pay securely by card through Square, using the button on this page or the link we send with your confirmation.</span></div></li>
+<li><div><b>Pay the deposit to lock in your dates</b><br><span class="muted">Pay securely by card or Afterpay through Square, or with PayPal, using the buttons on this page or the link we send with your confirmation.</span></div></li>
 <li><div><b>ID check</b><br><span class="muted">Bring photo ID on pick-up. Your $250 deposit is taken off your total hire cost. We keep a card on file to cover any damage, cleaning, fuel or late return costs.</span></div></li>
 <li><div><b>Job day</b><br><span class="muted">We run through the controls and safety checks before you start.</span></div></li>
 <li><div><b>Pay the balance before delivery</b><br><span class="muted">The rest of your hire is due 24 hours before delivery.</span></div></li>
@@ -432,7 +433,7 @@ var CFG = {
   wetHourly: 0,      // $ per hour
   wetMinHours: 4,
   wetHoursPerDay: 8,
-  dryDaily: 100, minDays: 2, paypal: "https://square.link/u/Zy9cc5Yz", formKey: "on", metro: [[2000,2234]], // postcode ranges counted as Sydney metro ($50 delivery); everything else is $75       // $ per day
+  dryDaily: 100, minDays: 2, paypal: "https://square.link/u/Zy9cc5Yz", paypalLink: "https://www.paypal.com/ncp/payment/3KEVDDV2LLJ3S", formKey: "on", metro: [[2000,2234]], // postcode ranges counted as Sydney metro ($50 delivery); everything else is $75       // $ per day
   depositPct: 0.25,  // deposit for wet hire
   bond: 250,
   attachments: [["200 mm digging bucket",0],["400 mm digging bucket",0],["600 mm digging bucket",0],["1000 mm mud bucket",0],["Thumb grab",0],["Ripper",0],["Rake",0],["Quick hitch",0]], // [name, extra $ per day]
@@ -534,7 +535,8 @@ CFG.attachments.forEach(function(a){var l=document.createElement("label");l.clas
 function showPay(c){
   var s=document.querySelector(".summary");
   $("paysum").innerHTML=s.innerHTML.replace(/ id="[^"]*"/g,"");
-  if(CFG.paypal){$("payl").href=CFG.paypal;$("payl").hidden=false;$("paynote").textContent="Pay your $250 deposit by card through Square to lock in your dates. We’ll confirm availability by email."}
+  if(CFG.paypal){$("payl").href=CFG.paypal;$("payl").hidden=false;$("paynote").textContent="Pay your $250 deposit by card or Afterpay through Square, or with PayPal, to lock in your dates. We’ll confirm availability by email."}
+  if(CFG.paypalLink){$("paypl").href=CFG.paypalLink;$("paypl").hidden=false}
   $("paypanel").classList.add("open");
   setTimeout(function(){$("paypanel").scrollIntoView({behavior:"smooth",block:"start"})},150);
 }
@@ -557,7 +559,7 @@ $("send").onclick=function(){
   var body = "BOOKING REQUEST\n\nType: Dry hire\nDates: "+$("sDates").textContent+" ("+c.days+" day"+(c.days>1?"s":"")+")\nAttachments: "+(c.picks.length?c.picks.map(function(p){return p.n}).join(", "):"None")+"\nDelivery: "+selTxt("deld")+" ["+$("sDel").textContent+"]"+"\nName: "+$("name").value+"\nMobile: "+$("phone").value+"\nEmail: "+$("email").value+"\nAddress: "+$("addr").value+" "+$("pc").value+"\nJob: "+($("notes").value||"–")+"\nDue now: "+$("sTot").textContent+"\n"+$("sRest").textContent;
   var link = "mailto:"+CFG.email+"?subject="+encodeURIComponent("Dry hire booking request – "+$("name").value)+"&body="+encodeURIComponent(body);
   showPay(c);
-  sendForm("Dry hire booking request – "+$("name").value,body,$("email").value,null,"Hi "+$("name").value.trim().split(" ")[0]+",\n\nThanks for booking with Exotic Earthworks! We’ve received your dry hire request.\n\nNext steps:\n1. Pay your $250 deposit through Square (if you haven’t already) to lock in your dates.\n2. We’ll confirm availability and email your booking confirmation and invoice.\n3. The remaining balance is due 24 hours before delivery.\n\nYour request:\n"+body+"\n\nQuestions? Just reply to this email.\n\nExotic Earthworks\nSydney & Central Coast");
+  sendForm("Dry hire booking request – "+$("name").value,body,$("email").value,null,"Hi "+$("name").value.trim().split(" ")[0]+",\n\nThanks for booking with Exotic Earthworks! We’ve received your dry hire request.\n\nNext steps:\n1. Pay your $250 deposit through Square (card or Afterpay), or with PayPal at https://www.paypal.com/ncp/payment/3KEVDDV2LLJ3S (if you haven’t already) to lock in your dates.\n2. We’ll confirm availability and email your booking confirmation and invoice.\n3. The remaining balance is due 24 hours before delivery.\n\nYour request:\n"+body+"\n\nQuestions? Just reply to this email.\n\nExotic Earthworks\nSydney & Central Coast");
   if(CFG.paypal){window.open(CFG.paypal,"_blank","noopener");sqOpened=true;$("msg").innerHTML="Opening secure Square checkout… If it didn’t open, <a href=\""+CFG.paypal+"\" target=\"_blank\" rel=\"noopener\">tap here to pay your deposit</a>.";}
   else{deliver(body,link,"msg");}
 };
@@ -668,7 +670,7 @@ var bb=document.querySelector(".brandbox");bb.onclick=function(e){if(e.target.cl
 var KB=[
  {k:/^(hi|hello|hey)\b|g'?day/,a:"Hi! I can help with prices, service areas, the machine and how to book. What would you like to know?"},
  {k:/bond|deposit/,a:"Dry hire needs a $250 deposit, which comes off your total hire cost, plus an ID check on pick-up. We also keep a card on file to cover any damage."},
- {k:/pay|paypal|square|card|afterpay|zip/,a:"The $250 deposit is paid securely through Square when you confirm your booking. You can pay by card or with Afterpay (4 interest-free instalments), and the rest of your hire is due 24 hours before delivery. Zip and PayPal aren’t offered yet."},
+ {k:/pay|paypal|square|card|afterpay|zip/,a:"The $250 deposit is paid securely when you confirm your booking. You can pay by card or Afterpay (4 interest-free instalments) through Square, or with PayPal, and the rest of your hire is due 24 hours before delivery. Zip isn’t offered yet."},
  {k:/price|cost|rate|how much|cheap/,a:"Dry hire (machine only, you operate it) is $100 per day (2 day minimum) plus a $250 deposit. Drop off is $50 within Sydney metro, or $75 outside Sydney metro. Wet hire (with an operator) is quoted per job, and quotes are free.",act:[["Book dry hire","dry"],["Free wet hire quote","wet"]]},
  {k:/wet|operator|operator|quote/,a:"Wet hire means we bring the machine and an operator. It’s a free quote: tell us about the job and we’ll price it.",act:[["Get a free wet hire quote","wet"]]},
  {k:/dry|without|myself|yourself/,a:"Dry hire is the machine only, and you operate it. It’s $100 per day (2 day minimum) plus a $250 deposit. Drop off is $50 within Sydney metro, or $75 outside Sydney metro. Pick your dates on the calendar to send a booking request.",act:[["Book dry hire","dry"]]},
