@@ -375,7 +375,7 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <div class="tot"><span>Total - due now</span><span id="sTot">–</span></div>
 <div class="muted" id="sRest" style="display:block;text-align:right;font-size:13px;padding-top:2px"></div>
 </div>
-<p style="margin-top:14px"><button class="btn" id="send" disabled>Confirm Booking</button></p>
+<p style="margin-top:14px"><button class="btn" id="send">Confirm Booking</button></p>
 <div id="msg" role="status"></div>
 <div id="paypanel" class="panel"><div class="inner"><div class="card" style="margin-top:16px">
 <h3 style="margin:0 0 6px">Checkout</h3>
@@ -537,7 +537,7 @@ function update(){
     $("sTot").textContent = money(c.dep)+" (deposit)";
     $("sRest").textContent = "Remaining "+money(Math.max(0,c.cost+c.att+c.del-c.dep))+" incl. GST due 24 hours before delivery";
   }
-  $("send").disabled = !(c && $("name").value.trim() && /^04\d{8}$/.test($("phone").value.replace(/[\s\-()]/g,"")) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("email").value.trim()) && $("addr").value.trim() && /^\d{4}$/.test($("pc").value.trim()));
+  $("send").disabled = false;
 }
 CFG.attachments.forEach(function(a){var l=document.createElement("label");l.className="opt";l.innerHTML="<input type=\"checkbox\" name=\"att\" value=\""+a[0]+"\" data-p=\""+a[1]+"\"><span><b>"+a[0]+"</b><br><span class=\"muted\">"+(a[1]>0?"+$"+a[1]+"/day":"Add to hire")+"</span></span>";l.querySelector("input").onchange=update;$("atts").appendChild(l)});
 function showPay(c){
@@ -568,9 +568,9 @@ function validate(c){
   var e4=setErr("addr",!$("addr").value.trim());
   var e4b=setErr("pc",!/^\d{4}$/.test($("pc").value.trim()));
   var e5=!c;
-  $("msg").innerHTML=e5?"<span class=\"ferr\">Please select your dates*</span>":"";
   var bad=e1||e2||e3||e4||e4b||e5;
-  if(bad){var f=document.querySelector("input.bad");if(f)f.scrollIntoView({behavior:"smooth",block:"center"})}
+  $("msg").innerHTML=e5?"<span class=\"ferr\">Please select your dates*</span>":(bad?"<span class=\"ferr\">Please check the highlighted fields above*</span>":"");
+  if(bad){var f=document.querySelector("#dry input.bad");if(f)f.scrollIntoView({behavior:"smooth",block:"center"});else $("msg").scrollIntoView({behavior:"smooth",block:"center"})}
   return !bad;
 }
 $("send").onclick=function(){
