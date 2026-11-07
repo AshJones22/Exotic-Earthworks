@@ -559,7 +559,7 @@ function updatePay(){
   else{$("payl").href=CFG.paypal;$("payl").textContent=v==="afterpay"?"Continue to Afterpay on Square":"Pay $250 deposit by card"}
 }
 Array.prototype.forEach.call(document.querySelectorAll("input[name=payvia]"),function(r){r.addEventListener("change",updatePay)});
-function setErr(id,bad){var el=$(id),n=$(id+"Err");if(!n){n=document.createElement("div");n.id=id+"Err";n.className="ferr";el.parentNode.appendChild(n)}n.textContent=bad?"Please fill*":"";el.classList.toggle("bad",!!bad);return !!bad}
+function setErr(id,bad){var el=$(id),n=$(id+"Err");if(!n){n=document.createElement("div");n.id=id+"Err";n.className="ferr";el.parentNode.appendChild(n)}n.textContent="";el.classList.toggle("bad",!!bad);return !!bad}
 function validate(c){
   var digits=$("phone").value.replace(/[\s\-()]/g,"");
   var e1=setErr("name",!$("name").value.trim());
