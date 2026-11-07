@@ -378,13 +378,13 @@ input[type=text],input[type=email],input[type=tel],input[type=date]{height:46px}
 <p style="margin-top:14px"><button class="btn" id="send">Confirm Booking</button></p>
 <div id="msg" role="status"></div>
 <div id="paypanel" class="panel"><div class="inner"><div class="card" style="margin-top:16px">
-<h4 id="payhow" style="margin:0 0 8px;scroll-margin-top:16px">Choose how to pay your deposit</h4>
+<h4 id="payhow" style="margin:0 0 8px;scroll-margin-top:16px">Choose your payment option</h4>
 <div class="payopts" role="radiogroup" aria-label="Payment method">
 <label class="opt payopt"><input type="radio" name="payvia" value="card" checked><span><b>Card</b><br><span class="muted">Visa or Mastercard, secure checkout with Square</span></span><span class="mini"><img src="/img/pay-visa.png" alt="Visa" height="22"><img src="/img/pay-mastercard.png" alt="Mastercard" height="22"></span></label>
 <label class="opt payopt"><input type="radio" name="payvia" value="afterpay"><span><b>Afterpay</b><br><span class="muted">4 interest-free instalments. Choose Afterpay on Square’s secure checkout.</span></span><span class="mini"><img src="/img/pay-afterpay.png" alt="Afterpay" height="22"></span></label>
 <label class="opt payopt"><input type="radio" name="payvia" value="paypal"><span><b>PayPal</b><br><span class="muted">Pay with your PayPal account.</span></span><span class="mini"><img src="/img/pay-paypal.png" alt="PayPal" height="22"></span></label>
 </div>
-<p style="margin-top:14px"><a id="payl" class="btn" href="#" target="_blank" rel="noopener">Pay $250 deposit</a></p>
+<p style="margin-top:14px"><a id="payl" class="btn" href="#" target="_blank" rel="noopener">Continue to Square</a></p>
 <p class="muted" id="paynote" style="font-size:14px">Your deposit is taken off your total hire cost. We keep a card on file to cover any damage, cleaning, fuel or late return costs.</p>
 </div></div></div>
 <p class="muted" style="font-size:14px">This sends a booking request, it isn’t confirmed until you receive our confirmation and the deposit is paid.</p>
@@ -543,8 +543,8 @@ var payVia="card";
 function updatePay(){
   var r=document.querySelector("input[name=payvia]:checked"),v=r?r.value:"card";
   payVia=v;
-  if(v==="paypal"){$("payl").href=CFG.paypalLink;$("payl").textContent="Pay $250 deposit with PayPal"}
-  else{$("payl").href=CFG.paypal;$("payl").textContent=v==="afterpay"?"Continue to Afterpay on Square":"Pay $250 deposit by card"}
+  if(v==="paypal"){$("payl").href=CFG.paypalLink;$("payl").textContent="Continue to PayPal"}
+  else{$("payl").href=CFG.paypal;$("payl").textContent=v==="afterpay"?"Continue to Afterpay":"Continue to Square"}
 }
 Array.prototype.forEach.call(document.querySelectorAll("input[name=payvia]"),function(r){r.addEventListener("change",updatePay)});
 function setErr(id,bad){var el=$(id),n=$(id+"Err");if(!n){n=document.createElement("div");n.id=id+"Err";n.className="ferr";el.parentNode.appendChild(n)}n.textContent=bad?"Please fill*":"";el.classList.toggle("bad",!!bad);return !!bad}
