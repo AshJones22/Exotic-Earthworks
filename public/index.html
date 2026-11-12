@@ -670,6 +670,7 @@ var bi=0;
 function applyBg(){var b=BGS[bi],r=b.f(),fx=$("bgfx");document.body.style.backgroundColor=r[2]||"";if(b.fx){fx.style.backgroundImage=r[0];document.body.style.backgroundImage="none"}else{fx.style.backgroundImage="none";document.body.style.backgroundImage=r[0];document.body.style.backgroundSize=r[1]}$("bgsw").textContent="Background: "+b.n+" ↻"}
 applyBg();
 var bb=document.querySelector(".brandbox");bb.onclick=function(e){if(e.target.closest("a"))return;if(!window.matchMedia("(hover:hover)").matches)bb.classList.toggle("big")};
+var bbArmed=false;window.addEventListener("scroll",function(){var y=window.pageYOffset||0;if(y>120)bbArmed=true;if(y<=0&&bbArmed){bb.classList.add("big");bbArmed=false}else if(y>40){bb.classList.remove("big")}},{passive:true});
 var KB=[
  {k:/^(hi|hello|hey)\b|g'?day/,a:"Hi! I can help with prices, service areas, the machine and how to book. What would you like to know?"},
  {k:/bond|deposit/,a:"Dry hire needs a $250 deposit, which comes off your total hire cost, plus an ID check on pick-up. We also keep a card on file to cover any damage."},
